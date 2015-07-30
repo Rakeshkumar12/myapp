@@ -3,7 +3,11 @@ class ArticlesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @articles = Article.all
+    if params[:search]
+      @articles = Article.search(params[:search]).order("created_at DESC")
+    else
+    @articles = Article.order("created_at DESC")
+    end
   end
 
   def show

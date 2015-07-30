@@ -5,9 +5,12 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def index
-     @users = User.paginate(page: params[:page], :per_page => 10)
-     #@users = User.where.not("id = ?",current_user.id).order("created_at DESC")
+    if params[:search]
+      @users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page], :per_page => 10)
+    else
+     @users = User.where.not("id = ?",current_user.id).order("created_at DESC").paginate(page: params[:page], :per_page => 10)
      @conversations = Conversation.involving(current_user).order("created_at DESC")
+    end
   end
 
   def show
