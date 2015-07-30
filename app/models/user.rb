@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
 
   has_many :followers, through: :passive_relationships, source: :follower
 
+  has_many :conversations, :foreign_key => :sender_id
+
+  after_create :create_default_conversation
+
   def feed
     following_ids = "SELECT followed_id FROM relationships WHERE  follower_id = :user_id"
     Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
@@ -27,6 +31,10 @@ class User < ActiveRecord::Base
 
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  def create_default_conversation
+    Conversation.create(sender_id: 1, recipient_id: self.id) unless self.id == 1
   end
   
 end
