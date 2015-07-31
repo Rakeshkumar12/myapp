@@ -1,5 +1,6 @@
 development:
-  server: "http://localhost:9292/faye"
+#thin start -R private_pub.ru -p 9292 -e development
+  server: "http://192.168.1.3:9292/faye"
   secret_token: "secret"
 test:
   server: "http://localhost:9292/faye"

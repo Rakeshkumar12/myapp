@@ -1,7 +1,7 @@
     <li>
       <%= gravatar_for user, size: 50 %>
-      Name: <%= link_to user.name, user %>
-      Email: <%= link_to user.email, user %>
+      Name: <%= link_to user.name, user %> |
+      Email: <%= link_to user.email, user %> |
        <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => user.id %>
       <% if current_user.admin? %>
       | <%= link_to "delete", user, method: :delete, data: { confirm: "Are You sure?" } %>
